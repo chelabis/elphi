@@ -489,8 +489,8 @@ def check_vphoto(chat_id, photo_id):
     query = f"SELECT photo_id FROM users WHERE chat_id = {chat_id}"
     cursor.execute(query)
     result = cursor.fetchone()
-    bot.send_photo('101695169', result[0], f"عکس پروفایل\n {chat_id}")
-    bot.send_photo('101695169', photo_id, f"عکس وریفای\n {chat_id}")
+    bot.send_photo(MY_ID, result[0], f"عکس پروفایل\n {chat_id}")
+    bot.send_photo(MY_ID, photo_id, f"عکس وریفای\n {chat_id}")
     connection.commit()
     cursor.close()
     connection.close()
@@ -512,7 +512,7 @@ def delete_all():
 def remove_all(message):
     chat_id = message.chat.id
     with user_lock:
-     if chat_id == 101695169:
+     if chat_id == MY_ID:
         delete_all()
         bot.send_message(chat_id, "حله بدون عکسا پاک شدند مهندس!")
      else:
@@ -523,7 +523,7 @@ def remove_all(message):
 def accept_verify(message):
     chat_id = message.chat.id
     with user_lock:
-     if chat_id == 101695169:
+     if chat_id == MY_ID:
         bot.send_message(chat_id, "آیدیشو بفرس مهندس")
         bot.register_next_step_handler(message, get_accept)
      else:
@@ -532,7 +532,7 @@ def accept_verify(message):
 def get_accept(message):
     chat_id = message.chat.id
     with user_lock:
-     if chat_id == 101695169:
+     if chat_id == MY_ID:
         accept_id = message.text
         update_verify(accept_id)
         bot.send_message(chat_id, "حله، وریفای شد.")
@@ -544,7 +544,7 @@ def get_accept(message):
 def reject_verify(message):
     chat_id = message.chat.id
     with user_lock:
-     if chat_id == 101695169:
+     if chat_id == MY_ID:
         bot.send_message(chat_id, "آیدیشو بفرس مهندس")
         bot.register_next_step_handler(message, get_reject)
      else:
@@ -553,7 +553,7 @@ def reject_verify(message):
 def get_reject(message):
     chat_id = message.chat.id
     with user_lock:
-     if chat_id == 101695169:
+     if chat_id == MY_ID:
         reject_id = message.text
         bot.send_message(chat_id, "حله، وریفای نشد.")
         bot.send_message(reject_id, "متاسفانه بات درخواست وریفای پروفایل شما را رد کرد!")
@@ -565,7 +565,7 @@ def get_reject(message):
 def remove(message):
     chat_id = message.chat.id
     with user_lock:
-     if chat_id == 101695169:
+     if chat_id == MY_ID:
         bot.send_message(chat_id, "آیدیشو بفرس مهندس")
         bot.register_next_step_handler(message, get_remove)
      else:
@@ -574,7 +574,7 @@ def remove(message):
 def get_remove(message):
     chat_id = message.chat.id
     with user_lock:
-     if chat_id == 101695169:
+     if chat_id == MY_ID:
         remove_id = message.text
         bot.send_message(remove_id, "متاسفانه بات پروفایل شما را به دلیل عکس نامرتبط پاک کرد!")
         delete_user(remove_id)
@@ -732,7 +732,7 @@ def get_photo_boy(message):
         if message.photo:
            photo_id = message.photo[-1].file_id
            update_photo(chat_id, photo_id)
-           bot.send_photo('101695169', photo_id, f"{chat_id}")
+           bot.send_photo(MY_ID, photo_id, f"{chat_id}")
            bot.send_message(chat_id, 'پروفایلت آمادست🥳 دوستی که میخوای رو پیدا کن😍', reply_markup=main_keyboard())
         else:
            bot.send_message(message.chat.id, "لطفا برای تکمیل پروفایل خود یک عکس ارسال کنید🙃")
@@ -767,7 +767,7 @@ def get_photo_girl(message):
         if message.photo:
            photo_id = message.photo[-1].file_id
            update_photo(chat_id, photo_id)
-           bot.send_photo('101695169', photo_id, f"{chat_id}")
+           bot.send_photo(MY_ID, photo_id, f"{chat_id}")
            bot.send_message(chat_id, 'پروفایلت آمادست🥳 دوستی که میخوای رو پیدا کن😍', reply_markup=main_keyboard())
         else:
            bot.send_message(message.chat.id, "لطفا برای تکمیل پروفایل خود یک عکس ارسال کنید🙃")
@@ -921,7 +921,7 @@ def new_photo(message):
         elif message.photo:
            photo_id = message.photo[-1].file_id
            update_photo(chat_id, photo_id)
-           bot.send_photo('101695169', photo_id, f"{chat_id}")
+           bot.send_photo(MY_ID, photo_id, f"{chat_id}")
            bot.send_message(chat_id, 'تصویر پروفایل شما تغییر یافت.', reply_markup=edit_profile_keyboard())
         else:
            bot.send_message(message.chat.id, "لطفا برای تغییر تصویر پروفایل خود یک عکس ارسال کنید🙃")
